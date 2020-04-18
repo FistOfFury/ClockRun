@@ -15,6 +15,9 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
@@ -22,13 +25,14 @@ import java.util.ArrayList;
  * See: http://blog.xoppa.com/basic-3d-using-libgdx-2/
  * @author Xoppa
  */
-public class main_game implements ApplicationListener {
+public class main_game implements ApplicationListener, GestureListener {
     public Environment environment;
     public PerspectiveCamera cam;
 
     public ModelBatch modelBatch;
     public Model model;
 
+    private Player player;
     public ArrayList<GameObject> instances;
 
     @Override
@@ -46,9 +50,13 @@ public class main_game implements ApplicationListener {
         cam.far = 300f;
         cam.update();
 
-        instances = new ArrayList<GameObject>();
+        this.instances = new ArrayList<GameObject>();
 
+        this.player = new Player();
+        this.instances.add(this.player);
 
+        GestureDetector gd = new GestureDetector(this);
+        Gdx.input.setInputProcessor(gd);
 
     }
 
@@ -84,5 +92,59 @@ public class main_game implements ApplicationListener {
 
     @Override
     public void resume() {
+    }
+
+    @Override
+    public boolean touchDown(float x, float y, int pointer, int button) {
+        // ignored
+        return true;
+    }
+
+    @Override
+    public boolean tap(float x, float y, int count, int button) {
+        this.player.tap(x, y);
+
+        return true;
+    }
+
+    @Override
+    public boolean longPress(float x, float y) {
+        // ignored
+        return true;
+    }
+
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button) {
+        // ignored
+        return true;
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        // ignored
+        return true;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
+        // ignored
+        return true;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance) {
+        // ignored
+        return true;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        // ignored
+        return true;
+    }
+
+    @Override
+    public void pinchStop() {
+        // ignored
     }
 }

@@ -19,8 +19,8 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
 public class Player extends GameObject {
-    int lives;
-    int score;
+    private int lives;
+    private int score;
 
     public Player()
     {
@@ -30,5 +30,42 @@ public class Player extends GameObject {
         this.score = 0;
         this.lives = 3;
     }
+
+    public void tap(float x, float y)
+    {
+        int X_LIMIT = Gdx.graphics.getWidth() / 2;
+        int Y_LIMIT = Gdx.graphics.getHeight() / 2;
+
+        if (x < X_LIMIT)
+        {
+            if (y < Y_LIMIT)
+            {
+                //LEFT - UPPER
+                this.move_left();
+            }
+
+            else
+            {
+                //LEFT - LOWER
+                this.move_left();
+            }
+        }
+        else
+        {
+            if (y < Y_LIMIT)
+            {
+                //RIGHT - UPPER
+                this.move_right();
+            }
+
+            else
+            {
+                //RIGHT - LOWER
+                this.move_right();
+            }
+        }
+
+    }
+
 
 }
