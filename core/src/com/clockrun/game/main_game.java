@@ -21,6 +21,8 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
+import javax.jws.WebParam;
+
 /**
  * See: http://blog.xoppa.com/basic-3d-using-libgdx-2/
  * @author Xoppa
@@ -34,6 +36,7 @@ public class main_game implements ApplicationListener, GestureListener {
 
     private Player player;
     public ArrayList<GameObject> instances;
+    private ArrayList<ModelInstance> bb;
 
     @Override
     public void create() {
@@ -51,9 +54,19 @@ public class main_game implements ApplicationListener, GestureListener {
         cam.update();
 
         this.instances = new ArrayList<GameObject>();
+        bb = new ArrayList<ModelInstance>();
 
         this.player = new Player();
         this.instances.add(this.player);
+//        instances.add(new GameObject(new ModelBuilder().createBox(5f, 5f, 5f,
+//                new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+//                Usage.Position | Usage.Normal), "bb", GameObject.NUM_ROADS / 2));
+//
+//        ModelBuilder mb = new ModelBuilder();
+//        model = mb.createBox(5f, 5f, 5f,
+//                new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+//                Usage.Position | Usage.Normal);
+//        bb.add(new ModelInstance(model));
 
         GestureDetector gd = new GestureDetector(this);
         Gdx.input.setInputProcessor(gd);
@@ -68,10 +81,8 @@ public class main_game implements ApplicationListener, GestureListener {
 
         modelBatch.begin(cam);
 
-        for(GameObject instance : instances) {
-            modelBatch.render(instance, environment);
-        }
-
+        modelBatch.render(instances, environment);
+        modelBatch.render(bb, environment);
 
         modelBatch.end();
     }

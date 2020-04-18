@@ -26,7 +26,7 @@ public class Player extends GameObject {
     {
         super(new ModelBuilder().createBox(5f, 5f, 5f,
                 new Material(ColorAttribute.createDiffuse(Color.GREEN)),
-                Usage.Position | Usage.Normal), "player", GameObject.NUM_ROADS / 2);
+                Usage.Position | Usage.Normal), GameObject.NUM_ROADS / 2);
         this.score = 0;
         this.lives = 3;
     }

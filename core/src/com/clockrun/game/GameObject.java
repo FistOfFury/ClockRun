@@ -13,8 +13,8 @@ public class GameObject extends ModelInstance implements Disposable {
     private int cur_road;
     static int NUM_ROADS = 3;
 
-    public GameObject(Model model, String node, int cur_road) {
-        super(model, node);
+    public GameObject(Model model, int cur_road) {
+        super(model);
         this.model = model;
         this.cur_road = cur_road;
     }
@@ -22,20 +22,20 @@ public class GameObject extends ModelInstance implements Disposable {
     public void move_left()
     {
         this.cur_road = (this.cur_road - 1 ) % GameObject.NUM_ROADS;
-        this.update_Road();
+        this.transform.trn(new Vector3(-((float)Gdx.graphics.getWidth() / NUM_ROADS),0, 0));
     }
 
     public void move_right()
     {
         this.cur_road = (this.cur_road + 1 ) % NUM_ROADS;
-        this.update_Road();
+        this.transform.trn(new Vector3((float)Gdx.graphics.getWidth() / NUM_ROADS,0, 0));
     }
 
     private void update_Road()
     {
         int x_place = (int)((Gdx.graphics.getWidth() * (NUM_ROADS + 0.5)) / NUM_ROADS );
         Vector3 cur_place = this.transform.getTranslation(new Vector3());
-        this.transform.setTranslation(new Vector3(x_place,cur_place.y,cur_place.y));
+        this.transform.setTranslation(new Vector3(x_place,cur_place.y,cur_place.z));
     }
 
 
