@@ -16,6 +16,8 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
+import java.util.ArrayList;
+
 /**
  * See: http://blog.xoppa.com/basic-3d-using-libgdx-2/
  * @author Xoppa
@@ -23,10 +25,11 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 public class main_game implements ApplicationListener {
     public Environment environment;
     public PerspectiveCamera cam;
-    public CameraInputController camController;
+
     public ModelBatch modelBatch;
     public Model model;
-    public ModelInstance instance;
+
+    public ArrayList<GameObject> instances;
 
     @Override
     public void create() {
@@ -43,25 +46,25 @@ public class main_game implements ApplicationListener {
         cam.far = 300f;
         cam.update();
 
-        ModelBuilder modelBuilder = new ModelBuilder();
-        model = modelBuilder.createBox(5f, 5f, 5f,
-                new Material(ColorAttribute.createDiffuse(Color.GREEN)),
-                Usage.Position | Usage.Normal);
-        instance = new ModelInstance(model);
+        instances = new ArrayList<GameObject>();
 
-        camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(camController);
+
+
     }
 
     @Override
     public void render() {
-        camController.update();
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         modelBatch.begin(cam);
-        modelBatch.render(instance, environment);
+
+        for(GameObject instance : instances) {
+            modelBatch.render(instance, environment);
+        }
+
+
         modelBatch.end();
     }
 
