@@ -18,6 +18,8 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,7 @@ import javax.jws.WebParam;
 public class main_game implements ApplicationListener, GestureListener {
     public Environment environment;
     public PerspectiveCamera cam;
+    private Viewport viewport;
 
     public ModelBatch modelBatch;
     public Model model;
@@ -52,6 +55,8 @@ public class main_game implements ApplicationListener, GestureListener {
         cam.near = 1f;
         cam.far = 300f;
         cam.update();
+
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
 
         this.instances = new ArrayList<GameObject>();
         bb = new ArrayList<ModelInstance>();
